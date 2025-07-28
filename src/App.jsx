@@ -7,7 +7,7 @@ import './App.css'
 
 function App() {
   const [cardData, setCardData] = useState(null)
-  const [isCardFrozen, setIsCardFrozen] = useState(true) // Default to frozen state
+  const [isCardFrozen, setIsCardFrozen] = useState(false) // Default to frozen state
 
   useEffect(() => {
     // Generate fake card data using faker.js

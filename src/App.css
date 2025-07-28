@@ -22,17 +22,28 @@ body {
 }
 
 .mobile-container {
+  position: relative;
   width: 375px;
   height: 812px;
   background: #000;
-  border-radius: 25px;
+  margin: 0 auto;
   overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+/* Main container */
+.mobile-container {
   position: relative;
-  box-shadow: 
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 8px 32px rgba(0, 0, 0, 0.5),
-    0 4px 16px rgba(0, 0, 0, 0.3);
-  border: 1px solid #1a1a1a;
+  width: 375px;
+  height: 812px;
+  background: #000;
+  margin: 0 auto;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
 }
 
 /* Status bar */
@@ -74,6 +85,13 @@ body {
 }
 
 /* Main content area */
+.payment-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
 .main-content {
   padding: 0 24px;
   height: calc(100vh - 44px - 83px);
@@ -175,14 +193,14 @@ body {
 
 .card-background.frozen {
   background: linear-gradient(135deg, 
-    #1a1a2e 0%, 
-    #16213e 25%, 
-    #0f3460 50%, 
-    #1a2147 75%, 
-    #0d2349 100%
+    #2c3844 0%, 
+    #34495e 25%, 
+    #2c3e50 50%, 
+    #1a202c 75%, 
+    #2b3544 100%
   );
-  opacity: 0.5;
-  filter: blur(1px);
+  opacity: 0.9;
+  filter: blur(0.8px);
 }
 
 .card-content {
@@ -191,29 +209,102 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
+  padding: 20px;
+}
+
+.card-content.frozen {
+  opacity: 0.9;
+  filter: brightness(0.8);
 }
 
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  margin-bottom: 40px;
 }
 
 .yolo-logo {
   color: #ff3b30;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
-  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.card-network {
-  font-size: 14px;
+.yes-bank-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.yes-bank-logo {
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: #4a90e2;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.red-divider {
+  width: 40px;
+  height: 2px;
+  background: #ff3b30;
+  border-radius: 1px;
+}
+
+.card-numbers-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+.card-number-group {
+  font-size: 18px;
   font-weight: 600;
-  background: linear-gradient(45deg, #ff3b30, #ff9500);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+}
+
+.card-bottom-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.expiry-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cvv-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.cvv-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.eye-icon {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.eye-icon:hover {
+  opacity: 1;
 }
 
 .card-number {
@@ -252,10 +343,10 @@ body {
 
 .card-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
-  padding: 0 8px;
+  margin-top: 24px;
+  padding: 0 20px;
 }
 
 .copy-details-btn {
@@ -269,26 +360,40 @@ body {
   font-weight: 500;
   cursor: pointer;
   padding: 8px 0;
+  transition: all 0.2s ease;
+}
+
+.copy-details-btn.frozen {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.copy-details-btn:hover:not(.frozen) {
+  opacity: 0.8;
 }
 
 .freeze-toggle {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   cursor: pointer;
-  padding: 8px 16px;
+  padding: 12px 20px;
   border-radius: 12px;
   transition: all 0.2s ease;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 59, 48, 0.3);
 }
 
 .freeze-toggle:hover {
-  background: rgba(255, 59, 48, 0.1);
+  background: rgba(255, 59, 48, 0.15);
+  border: 1px solid rgba(255, 59, 48, 0.5);
 }
 
 .freeze-icon {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   color: #ff3b30;
   transition: all 0.2s ease;
 }
@@ -298,10 +403,11 @@ body {
 }
 
 .freeze-text {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 600;
   color: #ff3b30;
   text-transform: lowercase;
+  letter-spacing: 0.3px;
 }
 
 .yolo-prepaid {
@@ -382,26 +488,43 @@ body {
 }
 
 /* Card shimmer animation for frozen state */
-@keyframes cardShimmer {
-  0%, 100% {
-    background-position: 0% 50%;
+@keyframes smokyBackground {
+  0% {
+    background-position: 0% 0%, 0% 100%, 100% 0%, 100% 100%, 0% 0%;
+    filter: blur(0.5px) brightness(1);
+  }
+  25% {
+    background-position: 30% 30%, 70% 70%, 80% 20%, 20% 80%, 10% 10%;
+    filter: blur(1px) brightness(1.1);
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 100% 50%, 50% 0%, 0% 100%, 50% 50%, 50% 50%;
+    filter: blur(0.8px) brightness(0.9);
+  }
+  75% {
+    background-position: 70% 80%, 20% 30%, 30% 70%, 80% 20%, 80% 80%;
+    filter: blur(1.2px) brightness(1.05);
+  }
+  100% {
+    background-position: 0% 0%, 0% 100%, 100% 0%, 100% 100%, 0% 0%;
+    filter: blur(0.5px) brightness(1);
   }
 }
 
 /* Bottom navigation */
 .bottom-navigation {
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 375px;
   height: 83px;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, #000 50%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.9) 0%, #000 50%);
   backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding: 8px 32px 24px;
+  border-radius: 25px 25px 0 0;
+  z-index: 1000;
 }
 
 .nav-tabs {
@@ -409,6 +532,7 @@ body {
   justify-content: space-around;
   align-items: center;
   height: 100%;
+  position: relative;
 }
 
 .nav-tab {
@@ -417,24 +541,34 @@ body {
   align-items: center;
   gap: 4px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  padding: 8px 16px;
-  border-radius: 12px;
+  transition: all 0.3s ease;
+  padding: 12px 20px;
+  border-radius: 20px;
+  min-width: 70px;
+  position: relative;
 }
 
 .nav-tab.active {
-  background: rgba(255, 59, 48, 0.1);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .nav-icon {
   width: 24px;
   height: 24px;
   stroke-width: 2;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .nav-tab.active .nav-icon {
-  color: #ff3b30;
+  color: #ffffff;
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .nav-tab:not(.active) .nav-icon {
@@ -444,11 +578,14 @@ body {
 .nav-label {
   font-size: 11px;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
 .nav-tab.active .nav-label {
-  color: #ff3b30;
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .nav-tab:not(.active) .nav-label {
@@ -467,6 +604,14 @@ body {
     border-radius: 0;
     border: none;
     box-shadow: none;
+  }
+
+  .bottom-navigation {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    transform: none;
   }
 }
 

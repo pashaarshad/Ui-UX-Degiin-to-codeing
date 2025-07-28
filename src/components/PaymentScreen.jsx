@@ -92,19 +92,16 @@ const PaymentScreen = ({ cardData, isCardFrozen, setIsCardFrozen }) => {
                   right: 0,
                   bottom: 0,
                   background: `
-                    linear-gradient(135deg, 
-                      #1a1d2e 0%, 
-                      #2a3441 20%, 
-                      #3d4855 40%, 
-                      #2c3844 60%, 
-                      #1f2633 80%, 
-                      #151821 100%
-                    )
+                    radial-gradient(ellipse at 30% 20%, #4a5568 0%, transparent 50%),
+                    radial-gradient(ellipse at 70% 80%, #2d3748 0%, transparent 50%),
+                    radial-gradient(ellipse at 20% 70%, #1a202c 0%, transparent 40%),
+                    radial-gradient(ellipse at 80% 30%, #2b3544 0%, transparent 45%),
+                    linear-gradient(135deg, #1a1d29 0%, #2c3e50 30%, #34495e 60%, #2c3e50 100%)
                   `,
-                  backgroundSize: '400% 400%',
-                  animation: 'cardShimmer 4s ease-in-out infinite'
+                  backgroundSize: '200% 200%, 150% 150%, 180% 180%, 160% 160%, 100% 100%',
+                  animation: 'smokyBackground 8s ease-in-out infinite'
                 }}>
-                  {/* Red geometric lines pattern */}
+                  {/* Red geometric lines pattern - exact match */}
                   <svg 
                     style={{
                       position: 'absolute',
@@ -112,53 +109,80 @@ const PaymentScreen = ({ cardData, isCardFrozen, setIsCardFrozen }) => {
                       left: 0,
                       width: '100%',
                       height: '100%',
-                      opacity: 0.8
+                      opacity: 0.9
                     }}
-                    viewBox="0 0 300 200"
+                    viewBox="0 0 200 320"
+                    preserveAspectRatio="xMidYMid slice"
                   >
-                    {/* Main diagonal lines */}
+                    {/* Top diagonal line */}
                     <path 
-                      d="M50,30 L120,100 L90,130 L20,60 Z" 
+                      d="M120 20 L180 80" 
+                      stroke="#ff3b30" 
+                      strokeWidth="2"
+                      fill="none"
+                      opacity="0.8"
+                    />
+                    
+                    {/* Main angular shape - top left */}
+                    <path 
+                      d="M20 60 L80 20 L120 60 L60 120 Z" 
                       fill="none" 
                       stroke="#ff3b30" 
                       strokeWidth="2"
                       opacity="0.9"
                     />
+                    
+                    {/* Center angular lines */}
                     <path 
-                      d="M80,20 L150,90 L120,120 L50,50 Z" 
+                      d="M140 80 L200 140 L160 180 L100 120 Z" 
                       fill="none" 
                       stroke="#ff3b30" 
-                      strokeWidth="1.5"
+                      strokeWidth="1.8"
                       opacity="0.7"
                     />
+                    
+                    {/* Bottom left angular shape */}
                     <path 
-                      d="M200,60 L270,130 L240,160 L170,90 Z" 
+                      d="M10 180 L70 140 L110 180 L50 240 Z" 
                       fill="none" 
                       stroke="#ff3b30" 
                       strokeWidth="2"
                       opacity="0.8"
                     />
+                    
+                    {/* Bottom right lines */}
                     <path 
-                      d="M180,80 L250,150 L220,180 L150,110 Z" 
+                      d="M120 200 L180 260 L140 300 L80 240 Z" 
                       fill="none" 
                       stroke="#ff3b30" 
                       strokeWidth="1.5"
                       opacity="0.6"
                     />
-                    {/* Additional angular patterns */}
+                    
+                    {/* Additional connecting lines */}
                     <path 
-                      d="M30,120 L100,50 L130,80 L60,150 Z" 
-                      fill="none" 
+                      d="M60 100 L120 160" 
                       stroke="#ff3b30" 
-                      strokeWidth="1"
+                      strokeWidth="1.5"
+                      fill="none"
                       opacity="0.5"
                     />
+                    
                     <path 
-                      d="M160,40 L230,110 L200,140 L130,70 Z" 
-                      fill="none" 
+                      d="M100 40 L160 100" 
                       stroke="#ff3b30" 
                       strokeWidth="1"
+                      fill="none"
                       opacity="0.4"
+                    />
+                    
+                    {/* Corner accent line */}
+                    <path 
+                      d="M20 280 L80 320" 
+                      stroke="#ff3b30" 
+                      strokeWidth="2"
+                      fill="none"
+                      opacity="0.7"
                     />
                   </svg>
                 </div>
@@ -199,59 +223,65 @@ const PaymentScreen = ({ cardData, isCardFrozen, setIsCardFrozen }) => {
 
             {/* Card Content */}
             <div className={`card-content ${isCardFrozen ? 'frozen' : ''}`}>
-              {/* Only show content when not frozen or minimal content */}
-              {!isCardFrozen && (
-                <>
-                  <div className="card-header">
-                    <div className="yolo-logo">YOLO</div>
-                    <div className="card-network">DEBIT</div>
-                  </div>
+              <div className="card-header">
+                <div className="yolo-logo">YOLO</div>
+                <div className="yes-bank-container">
+                  <div className="yes-bank-logo">YES BANK</div>
+                  <div className="red-divider"></div>
+                </div>
+              </div>
 
-                  <div className="card-number">
-                    {formatCardNumber(cardData?.number)}
-                  </div>
+              <div className="card-numbers-container">
+                <div className="card-number-group">6124</div>
+                <div className="card-number-group">4212</div>
+                <div className="card-number-group">3456</div>
+                <div className="card-number-group">7890</div>
+              </div>
 
-                  <div className="card-details">
-                    <div className="card-expiry">
-                      <div className="card-label">expiry</div>
-                      <div className="card-value">{formatCardData(cardData?.expiry)}</div>
-                    </div>
-                    <div className="card-cvv">
-                      <div className="card-label">cvv</div>
-                      <div className="card-value">{formatCardData(cardData?.cvv)}</div>
-                    </div>
+              <div className="card-bottom-info">
+                <div className="expiry-section">
+                  <div className="card-label">EXPIRY</div>
+                  <div className="card-value">01/28</div>
+                </div>
+                <div className="cvv-section">
+                  <div className="card-label">CVV</div>
+                  <div className="cvv-container">
+                    <div className="card-value">***</div>
+                    <svg className="eye-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff3b30" strokeWidth="2">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M1 1l22 22"/>
+                    </svg>
                   </div>
-                </>
-              )}
+                </div>
+              </div>
             </div>
           </motion.div>
 
-          {/* Card Actions */}
+          {/* Card Actions - always visible with consistent positioning */}
           <div className="card-actions">
-            {!isCardFrozen && (
-              <motion.button 
-                className="copy-details-btn"
-                onClick={handleCopyDetails}
-                whileTap={{ scale: 0.95 }}
-                animate={showCopyFeedback ? { scale: [1, 1.05, 1] } : {}}
-                transition={{ duration: 0.2 }}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                </svg>
-                {showCopyFeedback ? 'copied!' : 'copy details'}
-              </motion.button>
-            )}
+            <motion.button 
+              className={`copy-details-btn ${isCardFrozen ? 'frozen' : ''}`}
+              onClick={isCardFrozen ? undefined : handleCopyDetails}
+              whileTap={isCardFrozen ? {} : { scale: 0.95 }}
+              animate={showCopyFeedback && !isCardFrozen ? { scale: [1, 1.05, 1] } : {}}
+              transition={{ duration: 0.2 }}
+              style={{
+                opacity: isCardFrozen ? 0.6 : 1,
+                cursor: isCardFrozen ? 'not-allowed' : 'pointer'
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              {showCopyFeedback && !isCardFrozen ? 'copied!' : 'copy details'}
+            </motion.button>
 
             <motion.div 
               className="freeze-toggle"
               onClick={handleFreezeToggle}
               whileTap={{ scale: 0.95 }}
-              style={{ 
-                marginLeft: isCardFrozen ? 'auto' : '0',
-                justifyContent: isCardFrozen ? 'center' : 'flex-end'
-              }}
             >
               <motion.svg 
                 className={`freeze-icon ${isCardFrozen ? 'frozen' : ''}`}
