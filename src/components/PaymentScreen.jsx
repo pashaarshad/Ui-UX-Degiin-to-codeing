@@ -4,11 +4,22 @@ import { motion, AnimatePresence } from 'framer-motion'
 const PaymentScreen = ({ cardData, isCardFrozen, setIsCardFrozen }) => {
   const [activeMode, setActiveMode] = useState('card')
   const [showCopyFeedback, setShowCopyFeedback] = useState(true) // Default to frozen state
+  const [currentCardNumbers, setCurrentCardNumbers] = useState('6124 4212 3456 7890')
+
+  // Function to generate random 16-digit card number
+  const generateRandomCardNumber = () => {
+    const group1 = Math.floor(1000 + Math.random() * 9000) // 4 digits
+    const group2 = Math.floor(1000 + Math.random() * 9000) // 4 digits
+    const group3 = Math.floor(1000 + Math.random() * 9000) // 4 digits
+    const group4 = Math.floor(1000 + Math.random() * 9000) // 4 digits
+    
+    return `${group1} ${group2} ${group3} ${group4}`
+  }
 
   const handleCopyDetails = async () => {
     if (!cardData) return
     
-    const cardDetails = `Card: ${cardData.number}\nExpiry: ${cardData.expiry}\nCVV: ${cardData.cvv}\nName: ${cardData.holderName}`
+    const cardDetails = `Card: ${currentCardNumbers}\nExpiry: 01/28\nCVV: ***\nName: ${cardData.holderName}`
     
     try {
       await navigator.clipboard.writeText(cardDetails)
@@ -21,6 +32,8 @@ const PaymentScreen = ({ cardData, isCardFrozen, setIsCardFrozen }) => {
 
   const handleFreezeToggle = () => {
     setIsCardFrozen(!isCardFrozen)
+    // Generate new random card number every time freeze/unfreeze is clicked
+    setCurrentCardNumbers(generateRandomCardNumber())
   }
 
   const formatCardNumber = (number) => {
@@ -231,12 +244,18 @@ const PaymentScreen = ({ cardData, isCardFrozen, setIsCardFrozen }) => {
                 </div>
               </div>
 
-              <div className="card-numbers-container">
-                <div className="card-number-group">6124</div>
-                <div className="card-number-group">4212</div>
-                <div className="card-number-group">3456</div>
-                <div className="card-number-group">7890</div>
-              </div>
+              <motion.div 
+                className="card-numbers-container"
+                key={currentCardNumbers} // This will trigger re-render animation when numbers change
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <div className="card-number-group">{currentCardNumbers.split(' ')[0]}</div>
+                <div className="card-number-group">{currentCardNumbers.split(' ')[1]}</div>
+                <div className="card-number-group">{currentCardNumbers.split(' ')[2]}</div>
+                <div className="card-number-group">{currentCardNumbers.split(' ')[3]}</div>
+              </motion.div>
 
               <div className="card-bottom-info">
                 <div className="expiry-section">
